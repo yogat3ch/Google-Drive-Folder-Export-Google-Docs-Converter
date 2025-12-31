@@ -3,6 +3,7 @@ function sample1() {
 
   const srcFolderId = "###"; // Please set the folder ID of the folder including Google Documents.
   const dstFolderId = "###"; // Please set the destination folder ID.
+  const suffix = " (Converted from Google Doc)"; // Please set the suffix to add to the file name before the extension.
 
   const token = ScriptApp.getOAuthToken();
   if (srcFolderId === "###" || dstFolderId === "###") {
@@ -73,7 +74,7 @@ function copyFolderContents(srcFolder, dstFolder, token, lastProcessedIndex, cur
         const url = `https://docs.google.com/feeds/download/documents/export/Export?exportFormat=markdown&id=${documentId}`;
         Logger.log('Converting Google Doc to Markdown: ' + fileName);
         const res = UrlFetchApp.fetch(url, { headers: { authorization: "Bearer " + token } });
-        const blob = res.getBlob().setName(fileName + " (Converted from Google Doc).md").setContentTypeFromExtension();
+        const blob = res.getBlob().setName(fileName + suffix + ".md").setContentTypeFromExtension();
         dstFolder.createFile(blob);
         Logger.log('Converted and copied Google Doc: ' + fileName);
       } catch (error) {
