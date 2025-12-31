@@ -5,6 +5,10 @@ function sample1() {
   const dstFolderId = "###"; // Please set the destination folder ID.
 
   const token = ScriptApp.getOAuthToken();
+  if (srcFolderId === "###" || dstFolderId === "###") {
+    Logger.log('Please set the source and destination folder IDs.');
+    return;
+  }
   const srcFolder = DriveApp.getFolderById(srcFolderId);
   const dstFolder = DriveApp.getFolderById(dstFolderId);
 
