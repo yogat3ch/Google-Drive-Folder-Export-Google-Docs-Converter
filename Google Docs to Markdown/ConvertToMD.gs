@@ -31,13 +31,13 @@ function sample1() {
   Logger.log('Last processed index: ' + lastProcessedIndex);
 
   // Start copying folder contents from the source to the destination
-  let updatedIndex = copyFolderContents(srcFolder, dstFolder, token, lastProcessedIndex, 0);
+  let updatedIndex = copyFolderContents(srcFolder, dstFolder, suffix, token, lastProcessedIndex, 0);
 
   Logger.log('Process completed. Final index: ' + updatedIndex);
   properties.setProperty('lastProcessedIndex', updatedIndex);
 }
 
-function copyFolderContents(srcFolder, dstFolder, token, lastProcessedIndex, currentIndex) {
+function copyFolderContents(srcFolder, dstFolder, suffix, token, lastProcessedIndex, currentIndex) {
   const files = srcFolder.getFiles();
   const folders = srcFolder.getFolders();
 
