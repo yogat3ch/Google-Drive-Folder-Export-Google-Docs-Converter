@@ -1,6 +1,7 @@
 function ValidateTransformationAndFolderStructure() {
   const originalFolderId = "###"; // Please set the folder ID of the original folder.
   const transformedFolderId = "###"; // Please set the folder ID of the transformed folder.
+  const suffix = " (Converted from Google Doc)"; // Please set the suffix to add to the file name before the extension.
 
   const originalFolder = DriveApp.getFolderById(originalFolderId);
   const transformedFolder = DriveApp.getFolderById(transformedFolderId);
@@ -9,7 +10,7 @@ function ValidateTransformationAndFolderStructure() {
 
   // Start the comparison
   Logger.log('Starting validation process...');
-  compareFolders(originalFolder, transformedFolder, missingFiles);
+  compareFolders(originalFolder, transformedFolder, suffix, missingFiles);
 
   // Log the result
   if (missingFiles.length > 0) {
@@ -20,7 +21,7 @@ function ValidateTransformationAndFolderStructure() {
   }
 }
 
-function compareFolders(originalFolder, transformedFolder, missingFiles, path = '') {
+function compareFolders(originalFolder, transformedFolder, suffix, missingFiles, path = '') {
   // Get all files and folders in the original folder
   const originalFiles = originalFolder.getFiles();
   const originalFolders = originalFolder.getFolders();
@@ -38,7 +39,7 @@ function compareFolders(originalFolder, transformedFolder, missingFiles, path = 
 
     // Assume that if the original file is a Google Doc, it was converted to a Markdown (.md) file
     const transformedFileName = originalFile.getMimeType() === MimeType.GOOGLE_DOCS
-      ? originalFileName.replace(/\.gdoc$/, '') + " (Converted from Google Doc).md"
+      ? originalFileName.replace(/\.gdoc$/, '') + suffix + ".md"
       : originalFileName;
 
     // Check if the file exists in the transformed folder
